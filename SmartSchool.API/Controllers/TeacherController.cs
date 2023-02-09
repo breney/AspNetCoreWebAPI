@@ -6,40 +6,40 @@ using SmartSchool.WebAPI.Models;
 
 namespace SmartSchool.WebAPI.Controllers
 {
-    [Route("api/student")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class TeacherController : ControllerBase
     {
         ApplicationDbContext _db;
 
-        public StudentController(ApplicationDbContext db)
+        public TeacherController(ApplicationDbContext db)
         {
             _db = db;
         }
 
         // GET: api/<StudentController>
         [HttpGet]
-        public IEnumerable<Student> Get() => _db.Student.ToList();
+        public IEnumerable<Teacher> Get() => _db.Teacher.ToList();
 
 
         // GET api/<StudentController>/5
         [HttpGet("{id}")]
-        public Student Get(int id) => _db.Student.FirstOrDefault(x => x.Id == id);
+        public Teacher Get(int id) => _db.Teacher.FirstOrDefault(x => x.Id == id);
 
 
         // POST api/<StudentController>
         [HttpPost]
-        public void Post([FromBody] Student value)
+        public void Post([FromBody] Teacher value)
         {
-            _db.Student.Add(value);
+            _db.Teacher.Add(value);
             _db.SaveChanges();
         }
 
         // PUT api/<StudentController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Student value)
+        public void Put(int id, [FromBody] Teacher value)
         {
-            _db.Student.Update(value);
+            _db.Teacher.Update(value);
             _db.SaveChanges();
         }
 
@@ -47,11 +47,11 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var student = _db.Student.FirstOrDefault(x => x.Id == id);
+            var teacher = _db.Teacher.FirstOrDefault(x => x.Id == id);
 
-            if (student == null) return;
+            if (teacher == null) return;
 
-            _db.Student.Remove(student);
+            _db.Teacher.Remove(teacher);
             _db.SaveChanges();
         }
     }
