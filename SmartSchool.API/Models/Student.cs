@@ -12,7 +12,7 @@ namespace SmartSchool.WebAPI.Models
 
         public string Telephone { get; set; }
 
-        public IEnumerable<DisciplineStudent>? DisciplineStudents { get; set; }
+        public IEnumerable<DisciplineStudent> DisciplineStudent { get; set; }
 
     }
 }

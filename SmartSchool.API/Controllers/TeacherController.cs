@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartSchool.WebAPI.DbContexts;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.Repository.IRepository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,49 +11,26 @@ namespace SmartSchool.WebAPI.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
-        ApplicationDbContext _db;
+        private readonly ITeacherRepository _teacherRepository;
 
-        public TeacherController(ApplicationDbContext db)
+        public TeacherController(ITeacherRepository teacherRepository)
         {
-            _db = db;
+            _teacherRepository = teacherRepository;
         }
 
-        // GET: api/<StudentController>
         [HttpGet]
-        public IEnumerable<Teacher> Get() => _db.Teacher.ToList();
+        public IEnumerable<Teacher> Get() => _teacherRepository.Get();
 
-
-        // GET api/<StudentController>/5
         [HttpGet("{id}")]
-        public Teacher Get(int id) => _db.Teacher.FirstOrDefault(x => x.Id == id);
+        public Teacher Get(int id) => _teacherRepository.GetById(id);
 
-
-        // POST api/<StudentController>
         [HttpPost]
-        public void Post([FromBody] Teacher value)
-        {
-            _db.Teacher.Add(value);
-            _db.SaveChanges();
-        }
+        public void Post([FromBody] Teacher value) => _teacherRepository.Post(value);
 
-        // PUT api/<StudentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Teacher value)
-        {
-            _db.Teacher.Update(value);
-            _db.SaveChanges();
-        }
+        [HttpPut]
+        public void Put([FromBody] Teacher value) => _teacherRepository.Put(value);
 
-        // DELETE api/<StudentController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            var teacher = _db.Teacher.FirstOrDefault(x => x.Id == id);
-
-            if (teacher == null) return;
-
-            _db.Teacher.Remove(teacher);
-            _db.SaveChanges();
-        }
+        public void Delete(int id) => _teacherRepository.Delete(id);
     }
 }

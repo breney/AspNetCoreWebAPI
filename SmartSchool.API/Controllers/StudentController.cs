@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartSchool.WebAPI.DbContexts;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.Repository.IRepository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,49 +11,26 @@ namespace SmartSchool.WebAPI.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        ApplicationDbContext _db;
+        private readonly IStudentRepository _studentRepository;
 
-        public StudentController(ApplicationDbContext db)
+        public StudentController(IStudentRepository studentRepository)
         {
-            _db = db;
+            _studentRepository = studentRepository;
         }
 
-        // GET: api/<StudentController>
         [HttpGet]
-        public IEnumerable<Student> Get() => _db.Student.ToList();
+        public IActionResult Get() => Ok(_studentRepository.Get());
 
-
-        // GET api/<StudentController>/5
         [HttpGet("{id}")]
-        public Student Get(int id) => _db.Student.FirstOrDefault(x => x.Id == id);
+        public IActionResult Get(int id) => Ok(_studentRepository.GetById(id));
 
-
-        // POST api/<StudentController>
         [HttpPost]
-        public void Post([FromBody] Student value)
-        {
-            _db.Student.Add(value);
-            _db.SaveChanges();
-        }
+        public IActionResult Post([FromBody] Student value) => Ok(_studentRepository.Post(value));
 
-        // PUT api/<StudentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Student value)
-        {
-            _db.Student.Update(value);
-            _db.SaveChanges();
-        }
+        [HttpPut]
+        public IActionResult Put([FromBody] Student value) => Ok(_studentRepository.Put(value));
 
-        // DELETE api/<StudentController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            var student = _db.Student.FirstOrDefault(x => x.Id == id);
-
-            if (student == null) return;
-
-            _db.Student.Remove(student);
-            _db.SaveChanges();
-        }
+        public IActionResult Delete(int id) => Ok(_studentRepository.Delete(id));
     }
 }
