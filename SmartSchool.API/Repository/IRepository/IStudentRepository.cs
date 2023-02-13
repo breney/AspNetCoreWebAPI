@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.Models.Dto;
 
 namespace SmartSchool.WebAPI.Repository.IRepository
 {
     public interface IStudentRepository
     {
-        IEnumerable<Student> Get();
+        IEnumerable<StudentDto> Get();
 
-        Student GetById(int id);
+        StudentDto GetById(int id);
 
         Student Post(Student student);
 

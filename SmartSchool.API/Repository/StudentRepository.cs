@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using SmartSchool.WebAPI.DbContexts;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.Models.Dto;
 using SmartSchool.WebAPI.Repository.IRepository;
 
 
@@ -9,31 +11,36 @@ namespace SmartSchool.WebAPI.Repository
 {
     public class StudentRepository : IStudentRepository
     {
-        ApplicationDbContext _db;
+        private ApplicationDbContext _db;
+
         private IQueryable<Student> _query;
 
-        public StudentRepository(ApplicationDbContext db)
+        private IMapper _mapper;
+
+        public StudentRepository(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
             _query = _db.Student;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Student> Get()
+        public IEnumerable<StudentDto> Get()
         {
             var allStudents = _query.Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
-                .ThenInclude(discipline => discipline.Teacher).ToList();           
+                .ThenInclude(discipline => discipline.Teacher).ToList();
 
-            return allStudents;
+            return _mapper.Map<IEnumerable<StudentDto>>(allStudents);
+
         }
 
-        public Student GetById(int id) 
+        public StudentDto GetById(int id) 
         {
             var student = _query.AsNoTracking().Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
                 .ThenInclude(discipline => discipline.Teacher).Where(s => s.Id == id).FirstOrDefault();               
 
-            return student;
+            return _mapper.Map<StudentDto>(student);
         } 
 
         public Student Post(Student student)
