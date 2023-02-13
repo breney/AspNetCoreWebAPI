@@ -43,25 +43,29 @@ namespace SmartSchool.WebAPI.Repository
             return _mapper.Map<StudentDto>(student);
         } 
 
-        public Student Post(Student student)
+        public StudentDto Post(StudentDto studentDto)
         {
+            Student student = _mapper.Map<Student>(studentDto);
+
             _db.Student.Add(student);
             _db.SaveChanges();
 
-            return student;    
+            return _mapper.Map<StudentDto>(student);    
         }
 
-        public Student Put(Student student)
+        public StudentDto Put(StudentDto studentDto)
         {
-            bool checkStudent =  _db.Student.FirstOrDefault(x => x.Id == student.Id) != null ? true : false;
+            Student student = _mapper.Map<Student>(studentDto);
+
+            bool checkStudent = GetById(studentDto.Id) != null ? true : false;
            
             if (checkStudent)
             {
                 _db.Student.Update(student);
                 _db.SaveChanges();
-            } 
-            
-            return student;
+            }
+
+            return _mapper.Map<StudentDto>(student);
         }
 
         public bool Delete(int id)

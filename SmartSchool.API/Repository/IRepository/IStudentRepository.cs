@@ -10,9 +10,9 @@ namespace SmartSchool.WebAPI.Repository.IRepository
 
         StudentDto GetById(int id);
 
-        Student Post(Student student);
+        StudentDto Post(StudentDto studentDto);
 
-        Student Put(Student student);
+        StudentDto Put(StudentDto studentDto);
 
         bool Delete(int id);
     }

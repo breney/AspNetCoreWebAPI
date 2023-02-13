@@ -9,13 +9,13 @@ namespace SmartSchool.WebAPI.Models
 
         public string Name { get; set; }
 
-        public string Surname { get; set; }
+        public string Surname { get; set; } = string.Empty;
 
-        public string Telephone { get; set; }
+        public string Telephone { get; set; } = string.Empty;
 
         public int Registration { get; set; }
 
-        public DateTime DateBirth { get; set; }
+        public DateTime DateBirth { get; set; } = DateTime.Now;
 
         public DateTime DateTimeBegin { get; set; } = DateTime.Now;
 
