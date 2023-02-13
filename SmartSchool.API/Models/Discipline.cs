@@ -10,6 +10,8 @@ namespace SmartSchool.WebAPI.Models
 
         public int TeacherId { get; set; }
 
+        public int CourseId { get; set; }
+
         public int WorkLoad { get; set; }
 
         public int? PreRequirementId { get; set; } = null;
