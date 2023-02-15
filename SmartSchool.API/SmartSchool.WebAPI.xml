@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartSchool.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:SmartSchool.WebAPI.Controllers.StudentController">
+            <summary>
+            
+            </summary>
+            
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.#ctor(SmartSchool.WebAPI.Repository.IRepository.IStudentRepository)">
+            <summary>
+            
+            </summary>
+            <param name="studentRepository"></param>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Get">
+            <summary>
+            Method to Return all Students
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Get(System.Int32)">
+            <summary>
+            Method to Return Student By Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Post(SmartSchool.WebAPI.Models.Dto.StudentDto)">
+            <summary>
+            Method to Create a Student
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Put(SmartSchool.WebAPI.Models.Dto.StudentDto)">
+            <summary>
+            Method to Update a Student
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Delete(System.Int32)">
+            <summary>
+            Method to Delete a Student
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.WebAPI.Migrations.CreateUpdateTables">
+            <inheritdoc />
+        </member>
+        <member name="M:SmartSchool.WebAPI.Migrations.CreateUpdateTables.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SmartSchool.WebAPI.Migrations.CreateUpdateTables.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SmartSchool.WebAPI.Migrations.CreateUpdateTables.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

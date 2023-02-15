@@ -7,8 +7,9 @@ using SmartSchool.WebAPI.Repository.IRepository;
 
 namespace SmartSchool.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/teacher")]  
     public class TeacherController : ControllerBase
     {
         private readonly ITeacherRepository _teacherRepository;
