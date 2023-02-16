@@ -43,7 +43,12 @@ namespace SmartSchool.WebAPI.Controllers
         public async Task<IActionResult> Get([FromQuery] PageParams pageParams) 
         { 
             var students = await _studentRepository.Get(pageParams);
-            return Ok(_mapper.Map<IEnumerable<StudentDto>>(students));
+
+            var studentsResult = _mapper.Map<IEnumerable<StudentDto>>(students);
+
+            Response.AddPagination(students.CurrentPage, students.PageSize, students.TotalCount, students.TotalPages);
+
+            return Ok(studentsResult);
         }
 
         /// <summary>
