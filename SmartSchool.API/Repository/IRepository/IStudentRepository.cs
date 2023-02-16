@@ -7,7 +7,7 @@ namespace SmartSchool.WebAPI.Repository.IRepository
 {
     public interface IStudentRepository
     {
-        Task<PageList<Student>> Get();
+        Task<PageList<Student>> Get(PageParams pageParams);
 
         Task<Student> GetById(int id);
 

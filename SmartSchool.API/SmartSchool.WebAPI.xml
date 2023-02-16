@@ -16,7 +16,7 @@
             </summary>
             <param name="studentRepository"></param>
         </member>
-        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Get">
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.Get(SmartSchool.WebAPI.Helpers.PageParams)">
             <summary>
             Method to Return all Students
             </summary>

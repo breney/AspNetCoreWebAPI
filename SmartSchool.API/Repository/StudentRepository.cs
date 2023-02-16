@@ -24,13 +24,13 @@ namespace SmartSchool.WebAPI.Repository
             _query = db.Student;
         }
 
-        public async Task<PageList<Student>> Get()
+        public async Task<PageList<Student>> Get(PageParams pageParams)
         {
             await _query.Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
                 .ThenInclude(discipline => discipline.Teacher).ToListAsync();
 
-            return await PageList<Student>.CreateAsync(_query, 1, 5);
+            return await PageList<Student>.CreateAsync(_query, pageParams.PageNumber, pageParams.PageSize);
         }
 
         public async Task<Student> GetById(int id) 
