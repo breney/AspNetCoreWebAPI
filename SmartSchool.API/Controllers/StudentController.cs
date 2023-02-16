@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SmartSchool.WebAPI.DbContexts;
 using SmartSchool.WebAPI.Models;
 using SmartSchool.WebAPI.Models.Dto;
@@ -20,13 +21,16 @@ namespace SmartSchool.WebAPI.Controllers
     {
         private readonly IStudentRepository _studentRepository;
 
+        private readonly IMapper _mapper;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="studentRepository"></param>
-        public StudentController(IStudentRepository studentRepository)
+        public StudentController(IStudentRepository studentRepository, IMapper mapper)
         {
             _studentRepository = studentRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -38,7 +42,7 @@ namespace SmartSchool.WebAPI.Controllers
         public async Task<IActionResult> Get() 
         { 
             var students = await _studentRepository.Get();
-            return Ok(students);
+            return Ok(_mapper.Map<IEnumerable<StudentDto>>(students));
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace SmartSchool.WebAPI.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var student = await _studentRepository.GetById(id);
-            return Ok(student);
+            return Ok(_mapper.Map<StudentDto>(student));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using SmartSchool.WebAPI.DbContexts;
+using SmartSchool.WebAPI.Helpers;
 using SmartSchool.WebAPI.Models;
 using SmartSchool.WebAPI.Models.Dto;
 using SmartSchool.WebAPI.Repository.IRepository;
@@ -17,30 +18,28 @@ namespace SmartSchool.WebAPI.Repository
 
         private IMapper _mapper;
 
-        public StudentRepository(ApplicationDbContext db, IMapper mapper)
+        public StudentRepository(ApplicationDbContext db)
         {
             _db = db;
             _query = db.Student;
-            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<StudentDto>> Get()
+        public async Task<PageList<Student>> Get()
         {
-            var allStudents = await _query.Include(student => student.DisciplineStudent)
+            await _query.Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
-                .ThenInclude(discipline => discipline.Teacher).ToArrayAsync();
+                .ThenInclude(discipline => discipline.Teacher).ToListAsync();
 
-            return _mapper.Map<IEnumerable<StudentDto>>(allStudents);
-
+            return await PageList<Student>.CreateAsync(_query, 1, 5);
         }
 
-        public async Task<StudentDto> GetById(int id) 
+        public async Task<Student> GetById(int id) 
         {
             var student = await _query.AsNoTracking().Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
                 .ThenInclude(discipline => discipline.Teacher).Where(s => s.Id == id).FirstOrDefaultAsync();               
 
-            return _mapper.Map<StudentDto>(student);
+            return student;
         } 
 
         public StudentDto Post(StudentDto studentDto)

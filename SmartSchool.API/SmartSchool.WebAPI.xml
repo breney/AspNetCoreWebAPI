@@ -10,7 +10,7 @@
             </summary>
             
         </member>
-        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.#ctor(SmartSchool.WebAPI.Repository.IRepository.IStudentRepository)">
+        <member name="M:SmartSchool.WebAPI.Controllers.StudentController.#ctor(SmartSchool.WebAPI.Repository.IRepository.IStudentRepository,AutoMapper.IMapper)">
             <summary>
             
             </summary>
