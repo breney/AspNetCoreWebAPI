@@ -20,25 +20,25 @@ namespace SmartSchool.WebAPI.Repository
         public StudentRepository(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
-            _query = _db.Student;
+            _query = db.Student;
             _mapper = mapper;
         }
 
-        public IEnumerable<StudentDto> Get()
+        public async Task<IEnumerable<StudentDto>> Get()
         {
-            var allStudents = _query.Include(student => student.DisciplineStudent)
+            var allStudents = await _query.Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
-                .ThenInclude(discipline => discipline.Teacher).ToList();
+                .ThenInclude(discipline => discipline.Teacher).ToArrayAsync();
 
             return _mapper.Map<IEnumerable<StudentDto>>(allStudents);
 
         }
 
-        public StudentDto GetById(int id) 
+        public async Task<StudentDto> GetById(int id) 
         {
-            var student = _query.AsNoTracking().Include(student => student.DisciplineStudent)
+            var student = await _query.AsNoTracking().Include(student => student.DisciplineStudent)
                 .ThenInclude(disciplineStudent => disciplineStudent.Discipline)
-                .ThenInclude(discipline => discipline.Teacher).Where(s => s.Id == id).FirstOrDefault();               
+                .ThenInclude(discipline => discipline.Teacher).Where(s => s.Id == id).FirstOrDefaultAsync();               
 
             return _mapper.Map<StudentDto>(student);
         } 

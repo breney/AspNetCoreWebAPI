@@ -6,9 +6,9 @@ namespace SmartSchool.WebAPI.Repository.IRepository
 {
     public interface IStudentRepository
     {
-        IEnumerable<StudentDto> Get();
+        Task<IEnumerable<StudentDto>> Get();
 
-        StudentDto GetById(int id);
+        Task<StudentDto> GetById(int id);
 
         StudentDto Post(StudentDto studentDto);
 

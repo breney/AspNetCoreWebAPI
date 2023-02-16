@@ -20,10 +20,18 @@ namespace SmartSchool.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Teacher> Get() => _teacherRepository.Get();
+        public async Task<IActionResult> Get() 
+        {
+            var teachers = await _teacherRepository.Get();
+            return Ok(teachers);
+        } 
 
         [HttpGet("{id}")]
-        public Teacher Get(int id) => _teacherRepository.GetById(id);
+        public async Task<IActionResult> Get(int id)
+        {
+            var teacher = await _teacherRepository.GetById(id);
+            return Ok(teacher);
+        }
 
         [HttpPost]
         public void Post([FromBody] Teacher value) => _teacherRepository.Post(value);

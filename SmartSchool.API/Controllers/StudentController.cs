@@ -33,10 +33,13 @@ namespace SmartSchool.WebAPI.Controllers
         /// Method to Return all Students
         /// </summary>
         /// <returns></returns>
-        
-        [HttpGet]
-        public IActionResult Get() => Ok(_studentRepository.Get());
 
+        [HttpGet]
+        public async Task<IActionResult> Get() 
+        { 
+            var students = await _studentRepository.Get();
+            return Ok(students);
+        }
 
         /// <summary>
         /// Method to Return Student By Id
@@ -45,7 +48,11 @@ namespace SmartSchool.WebAPI.Controllers
         /// <returns></returns>
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id) => Ok(_studentRepository.GetById(id));
+        public async Task<IActionResult> Get(int id)
+        {
+            var student = await _studentRepository.GetById(id);
+            return Ok(student);
+        }
 
         /// <summary>
         /// Method to Create a Student

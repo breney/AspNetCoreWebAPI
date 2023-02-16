@@ -1,37 +1,44 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.DbContexts;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.Models.Dto;
 using SmartSchool.WebAPI.Repository.IRepository;
+using System.Collections.Generic;
 
 namespace SmartSchool.WebAPI.Repository
 {
     public class TeacherRepository : ITeacherRepository
     {
         ApplicationDbContext _db;
+
         private IQueryable<Teacher> _query;
 
-        public TeacherRepository(ApplicationDbContext db)
+        private IMapper _mapper;
+
+        public TeacherRepository(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
             _query = _db.Teacher;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Teacher> Get() 
+        public async Task<IEnumerable<TeacherDto>> Get() 
         {
-            var teacher = _query.Include(t => t.Disciplines)
+            var teachers = await _query.Include(t => t.Disciplines)
                 .ThenInclude(d => d.DisciplineStudents)
-                .ThenInclude(ds => ds.Student).ToList();
+                .ThenInclude(ds => ds.Student).ToArrayAsync();
 
-            return teacher;
+            return _mapper.Map<IEnumerable<TeacherDto>>(teachers);
         }
 
-        public Teacher GetById(int id)
+        public async Task<TeacherDto> GetById(int id)
         {
-            var teacher = _query.Include(t => t.Disciplines)
+            var teacher = await _query.Include(t => t.Disciplines)
                     .ThenInclude(d => d.DisciplineStudents)
-                    .ThenInclude(ds => ds.Student).Where(s => s.Id == id).FirstOrDefault();
+                    .ThenInclude(ds => ds.Student).Where(s => s.Id == id).FirstOrDefaultAsync();
 
-            return teacher;
+            return _mapper.Map<TeacherDto>(teacher);
         }
 
         public Teacher Post(Teacher teacher)

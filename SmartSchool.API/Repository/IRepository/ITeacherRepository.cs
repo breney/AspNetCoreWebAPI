@@ -1,12 +1,13 @@
 ﻿using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.Models.Dto;
 
 namespace SmartSchool.WebAPI.Repository.IRepository
 {
     public interface ITeacherRepository
     {
-        IEnumerable<Teacher> Get();
+        Task<IEnumerable<TeacherDto>> Get();
 
-        Teacher GetById(int id);
+        Task<TeacherDto> GetById(int id);
 
         Teacher Post(Teacher teacher);
 

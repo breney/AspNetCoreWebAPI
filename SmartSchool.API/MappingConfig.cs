@@ -18,7 +18,9 @@ namespace SmartSchool.WebAPI
                 config.CreateMap<StudentDto, Student>()
                 .ForMember(dest => dest.DateBirth, opt => opt.MapFrom(src => DateTimeExtensions.GetDateBirthByAge(src.Age)));
 
-
+                config.CreateMap<Teacher, TeacherDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"))
+                .ReverseMap();
             });
 
             return mappingConfig;
